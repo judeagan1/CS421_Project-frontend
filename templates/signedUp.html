@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+    <h1>Successfully Signed Up!</h1>
+    <a href="{{url_for('login')}}"><button>Back To Login</button></a>
+{% endblock %}

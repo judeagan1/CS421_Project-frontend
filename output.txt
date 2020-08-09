@@ -1,0 +1,14 @@
+2020-07-07T19:01:03.413-0500 I  CONTROL  [main] Automatically disabling TLS 1.0, to force-enable TLS 1.0 specify --sslDisabledProtocols 'none'
+2020-07-07T19:01:03.423-0500 W  ASIO     [main] No TransportLayer configured during NetworkInterface startup
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] MongoDB starting : pid=15217 port=27017 dbpath=./db 64-bit host=Brians-MBP
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] db version v4.2.8
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] git version: 43d25964249164d76d5e04dd6cf38f6111e21f5f
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] allocator: system
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] modules: none
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] build environment:
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten]     distarch: x86_64
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten]     target_arch: x86_64
+2020-07-07T19:01:03.423-0500 I  CONTROL  [initandlisten] options: { storage: { dbPath: "./db" } }
+2020-07-07T19:01:03.424-0500 E  STORAGE  [initandlisten] Failed to set up listener: SocketException: Address already in use
+2020-07-07T19:01:03.424-0500 I  CONTROL  [initandlisten] now exiting
+2020-07-07T19:01:03.424-0500 I  CONTROL  [initandlisten] shutting down with code:48

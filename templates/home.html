@@ -1,0 +1,178 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1> This is the Home Page</h1>
+    <div class="box">
+        <canvas id="lineChart" height="1000" width="2500"></canvas>
+    </div>
+   
+    
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <button id="showAll" onclick="updateChart(undefined)">All data</button>
+    <button id="earliest" onclick="updateChart('earliest')">Earliest data</button>
+    <button id="latest" onclick="updateChart('latest')">Latest data</button>
+
+    <script>
+      
+        var globalUpdateValue = undefined
+        var chartData;
+        
+
+        function getData () {
+
+            $.ajax({
+            type: 'GET',
+            url: '/data',
+            async: false,
+            dataType: 'json',
+            success: function (data) {
+                chartData = data
+            }
+            });
+        }
+
+        
+        getData();
+
+        
+        var parsed = []
+        var events = []
+        var timestamps = []
+        var temperatures = []
+        var humidities = []
+        
+            // fuses the new and old format into the same format 
+            function setValues (){
+                parsed = []
+                events = []
+                timestamps = []
+                temperatures = []
+                humidities = []
+
+                    
+                chartData.forEach(element => {
+                    parsed.push(JSON.parse(element))
+                })
+            
+                only100 = parsed.slice(parsed.length-100,parsed.length-1)
+                console.log(only100)
+                
+                only100.forEach(element => {
+                    if (element.event){
+                        events.push(element.event)
+                    } 
+                    else{
+                        events.push(element)
+                    }  
+                });
+            
+
+                
+                //isolates the time stamps which will be used as labels on the x axis
+                
+                for (var x = 0; x < events.length; x++){
+                    timestamps.push(events[x].timestamp)
+                }
+                // DATES ARE IN AN INVALID FORMAT SO WE ARE ROLLING WITH THIS FORMATTING FOR NOW
+                
+                
+                //isolates the temperature data
+    
+                events.forEach(temperature =>{ temperatures.push(temperature.temperature)})
+
+        
+                events.forEach(humidity =>{ humidities.push(humidity.humdity)})
+
+                
+
+
+            }
+            
+            setValues();
+
+            var ctx = document.getElementById('lineChart').getContext('2d');
+            var chart = new Chart(ctx, {
+            // The type of chart we want to create
+            type: 'line',
+
+            // The data for our dataset
+            data: {
+                labels: timestamps,
+                datasets: [{
+                    label: 'Temperature',
+                    backgroundColor: 'rgb(227, 91, 91, 0.5)',
+                    borderColor: 'rgb(227, 91, 91, 0.8)',
+                    data: temperatures
+                },{
+                    label: 'Humidity',
+                    backgroundColor: 'rgb(89, 158, 247, 0.5)',
+                    borderColor: 'rgb(89, 158, 247, 0.8)',
+                    data: humidities
+                }]
+            },
+
+            // Configuration options go here
+            options: {}
+            });
+
+
+            function updateChart(buttonClicked){
+                globalUpdateValue = buttonClicked
+
+                var newTimestamps = timestamps;
+                var newTemperatures = temperatures;
+                var newHumidities = humidities;
+
+                if (buttonClicked == undefined){
+                    newTimestamps =timestamps;
+                    newTemperatures = temperatures;
+                    newHumidities = humidities;
+                    chart.data.labels = newTimestamps
+                    chart.data.datasets[0].data = newTemperatures
+                    chart.data.datasets[1].data = newHumidities
+                    chart.update()
+                }
+
+                else if (buttonClicked == 'earliest'){
+                    newTimestamps = timestamps.slice(0,20)
+                    newTemperatures = temperatures.slice(0,20)
+                    newHumidities = humidities.slice(0,20)
+                    chart.data.labels = newTimestamps
+                    chart.data.datasets[0].data = newTemperatures
+                    chart.data.datasets[1].data = newHumidities
+                    chart.update()
+                }
+
+                else if (buttonClicked == 'latest'){
+                    newTimestamps = timestamps.slice(timestamps.length -20, timestamps.length -1)
+                    newTemperatures = temperatures.slice(timestamps.length -20, timestamps.length -1)
+                    newHumidities = humidities.slice(timestamps.length -20, timestamps.length -1)
+                    chart.data.labels = newTimestamps
+                    chart.data.datasets[0].data = newTemperatures
+                    chart.data.datasets[1].data = newHumidities
+                    chart.update()
+                }
+                
+            }
+
+            setInterval(function (){
+                
+                getData();
+                setValues();
+                parsed.shift()
+                events.shift()
+                timestamps.shift()
+                temperatures.shift()
+                humidities.shift()
+                updateChart(globalUpdateValue);
+                
+
+            }, 1000)
+
+    </script>
+    
+    <a href="{{url_for('logout')}}"><button>Logout</button></a>
+{% endblock %}

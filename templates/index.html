@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazeriffic 2!</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    
+
+
+    <style>
+        .column {
+            float: left;
+            border: 2px solid #0e153a;
+            display: table;
+        }
+        .left {
+            height: 100vh;
+            width: 60%;
+            left: 0px;
+            background-color: #2d4059;
+        }
+        .right {
+            height: 100vh;
+            width: 40%;
+            right: 0px;
+            background-color: #f07b3f;
+        }
+        .jumbotron {
+            color: #ffd460;
+            background-color: #ea5455;
+            border: 2px solid #0e153a;
+        }
+        .layered {
+            text-shadow: 1px 1px #030200,
+                        2px 2px #ffd560d5,
+                        3px 3px #ffd560a9,
+                        4px 4px #ffd56067,
+                        5px 5px #ffd5601a;
+        }
+        .button {
+            position: absolute;
+            background-color: #2d4059;
+            padding: 100px;
+            border-radius: 100%;
+            display: grid;
+        }
+    </style>
+</head>
+<body style="color: #3d5af1; background-color:#ea5455;">
+    <div class="column left d-flex justify-content-around align-items-center">
+        <div class="jumbotron">
+            <div class="layered">
+                <h1>AMAZERIFFIC 2!</h1>
+            </div>
+        </div>
+    </div>
+    <div class="column right d-flex justify-content-around align-items-center">
+        <div class="button">
+            <a href="{{url_for('login')}}">Login</a>
+        </div>
+    </div>
+</body>
+</html>

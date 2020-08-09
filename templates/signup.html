@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<div class="align-content-center">
+    <form class="forms" action="/signup" method="POST">
+        {{formSignUp.hidden_tag()}}
+        {{wtf.form_field(formSignUp.username)}}
+        {{wtf.form_field(formSignUp.email)}}
+        {{wtf.form_field(formSignUp.password)}}
+        <button type="submit">Sign Up</button>
+    </form>
+    <br> <br>
+</div>
+
+
+{% endblock %}

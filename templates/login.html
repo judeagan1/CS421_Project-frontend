@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block content %}
+
+<div class="jumbotron" style="padding: 10px;">
+    <div class="fullPage">
+        <form class="forms" method="POST">
+            {{formLogin.hidden_tag()}}
+            {{wtf.form_field(formLogin.username)}}
+            {{wtf.form_field(formLogin.password)}}
+            <button type="submit" style="background-color: #c24d2c; color: #0e153a;">Login</button>
+        </form>
+        <br> <br>
+        <a href="{{url_for('sign_up')}}"><button style="background-color: #c24d2c; color: #0e153a;">Sign Up!</button></a>
+
+        {% for user in users%}
+        <li>{{user}}</li>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock %}
